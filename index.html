@@ -13,15 +13,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Palenquin:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; height:100%; background:#F5A020; overflow:hidden; }
-.screen { position:fixed; inset:0; width:100%; height:100%; }
+html, body { 
+    width:100%; 
+    height:100%; 
+    background:#F5A020; 
+    overflow:hidden;
+    position: fixed; /* Evita rebotes en iOS */
+}
+.screen { position:fixed; inset:0; width:100%; height:100%; overflow: hidden; }
 .bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; }
 
-/* Sin espacio abajo para que no se vea la barra */
+/* Ajuste agresivo para eliminar la barra inferior */
 .content {
-  position:absolute; inset:0;
-  display:flex; flex-direction:column; align-items:center;
+  position:absolute; 
+  top:0; 
+  left:0; 
+  right:0; 
+  bottom:0; /* Asegura que llegue al final */
+  display:flex; 
+  flex-direction:column; 
+  align-items:center;
+  /* Quitamos todo el padding de abajo y usamos el viewport-fit para que suba */
   padding: max(env(safe-area-inset-top, 60px), 60px) 32px 0 32px;
+  height: 100%;
 }
 
 .logo { width:55%; max-width:220px; margin-bottom:20px; }
@@ -31,7 +45,18 @@ html, body { width:100%; height:100%; background:#F5A020; overflow:hidden; }
   line-height:1.45; font-weight:400; margin-bottom:auto;
 }
 .tagline strong { font-weight:700; }
-.bottom { width:100%; display:flex; flex-direction:column; align-items:center; gap:16px; margin-bottom: 30px; }
+
+/* Contenedor de botones pegado al borde real del dispositivo */
+.bottom { 
+    width:100%; 
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+    gap:16px; 
+    padding-bottom: 20px; /* Un pequeño margen estético, pero sin la "barra" gris/blanca */
+    margin-bottom: 0px; 
+}
+
 .btn-crear {
   width:88%; max-width:320px;
   background:#ffffff; border:none; border-radius:50px;
@@ -47,11 +72,12 @@ html, body { width:100%; height:100%; background:#F5A020; overflow:hidden; }
 
 .help-btn { 
   position:absolute; 
-  bottom: 25px; 
+  bottom: 20px; 
   right:22px; 
   width:38px; 
   height:38px; 
   cursor:pointer; 
+  z-index: 10;
 }
 </style>
 </head>

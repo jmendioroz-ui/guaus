@@ -103,5 +103,31 @@ html, body {
     </div>
   </div>
 </div>
+<script>
+  const screen = document.querySelector('.screen');
+  
+  // Detectar doble clic (o doble toque en móvil)
+  screen.addEventListener('dblclick', () => {
+    if (screen.style.backgroundSize === 'contain') {
+      screen.style.backgroundSize = 'cover';
+    } else {
+      screen.style.backgroundSize = 'contain';
+    }
+  });
+
+  // Soporte para móviles (doble toque rápido)
+  let lastTap = 0;
+  screen.addEventListener('touchstart', (e) => {
+    const now = Date.now();
+    if (now - lastTap < 300) {
+      if (screen.style.backgroundSize === 'contain') {
+        screen.style.backgroundSize = 'cover';
+      } else {
+        screen.style.backgroundSize = 'contain';
+      }
+    }
+    lastTap = now;
+  });
+</script>
 </body>
 </html>

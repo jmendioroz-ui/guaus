@@ -104,29 +104,28 @@ html, body {
   </div>
 </div>
 <script>
-  const screen = document.querySelector('.screen');
-  
-  // Detectar doble clic (o doble toque en móvil)
-  screen.addEventListener('dblclick', () => {
-    if (screen.style.backgroundSize === 'contain') {
-      screen.style.backgroundSize = 'cover';
-    } else {
-      screen.style.backgroundSize = 'contain';
-    }
-  });
-
-  // Soporte para móviles (doble toque rápido)
+  const screenDiv = document.querySelector('.screen');
   let lastTap = 0;
-  screen.addEventListener('touchstart', (e) => {
-    const now = Date.now();
-    if (now - lastTap < 300) {
-      if (screen.style.backgroundSize === 'contain') {
-        screen.style.backgroundSize = 'cover';
-      } else {
-        screen.style.backgroundSize = 'contain';
-      }
+
+  const toggleSize = () => {
+    // Si está en modo 'cubrir', lo pasa a 'contener' y viceversa
+    if (screenDiv.style.backgroundSize === 'contain') {
+      screenDiv.style.backgroundSize = 'cover';
+    } else {
+      screenDiv.style.backgroundSize = 'contain';
     }
-    lastTap = now;
+  };
+
+  screenDiv.addEventListener('dblclick', toggleSize);
+
+  screenDiv.addEventListener('touchstart', (e) => {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTap;
+    if (tapLength < 300 && tapLength > 0) {
+      toggleSize();
+      e.preventDefault(); 
+    }
+    lastTap = currentTime;
   });
 </script>
 </body>
